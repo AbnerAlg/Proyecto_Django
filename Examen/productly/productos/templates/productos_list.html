@@ -1,0 +1,36 @@
+<!-- templates/productos/productos_list.html -->
+{% extends 'base.html' %}
+
+{% block title %}Listado de Productos{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Listado de Productos</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Stock</th>
+                <th>Puntaje</th>
+                <th>Categoría</th>
+                <th>Fecha de Creación</th> <!-- Campo para la fecha -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in productos %}
+            <tr>
+                <td>{{ producto.nombre }}</td>
+                <td>{{ producto.stock }}</td>
+                <td>{{ producto.puntaje }}</td>
+                <td>{{ producto.categoria.nombre }}</td>
+                <td>{{ producto.fecha_creacion }}</td> <!-- Este campo debe estar en tu modelo -->
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No hay productos disponibles.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

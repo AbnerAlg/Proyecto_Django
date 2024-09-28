@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Administración de Productos{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1>Productos</h1>
+            <a href="{% url 'agregar_producto' %}" class="btn btn-success">Agregar</a>  <!-- Botón Agregar -->
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Stock</th>
+                        <th>Puntaje</th>
+                        <th>Categoría</th>
+                        <th>Fecha de Creación</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'detalle_producto' producto.id %}">{{ producto.nombre }}</a>
+                        </td>
+                        <td>{{ producto.stock }}</td>
+                        <td>{{ producto.puntaje }}</td>
+                        <td>{{ producto.categoria.nombre }}</td>
+                        <td>{{ producto.fecha_creacion }}</td>
+                        <td>
+                            <a href="{% url 'modificar_producto' producto.id %}" class="btn btn-warning">Modificar</a>
+                            <a href="{% url 'eliminar_producto' producto.id %}" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?');">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6">No hay productos disponibles.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>  
+    </div>    
+</div>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Gestor de Productos{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Gestor de Productos</h2>
+    <div class="card mb-3">
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="nombre">Nombre del Producto</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="stock">Stock</label>
+                    <input type="number" class="form-control" id="stock" name="stock" required>
+                </div>
+                <div class="form-group">
+                    <label for="puntaje">Puntaje</label>
+                    <input type="number" class="form-control" id="puntaje" name="puntaje" step="0.1" required>
+                </div>
+                <div class="form-group">
+                    <label for="categoria">Categoría</label>
+                    <select class="form-control" id="categoria" name="categoria">
+                        {% for categoria in categorias %}
+                            <option value="{{ categoria.id }}">{{ categoria.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Agregar Producto</button>
+            </form>
+        </div>
+    </div>
+    
+    <h1>Listado de Productos</h1>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Listado de Productos</h2>
+        <a href="{% url 'productos' %}" class="btn btn-success">Agregar</a>  <!-- Redirige a la misma página -->
+    </div>
+    
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Stock</th>
+                    <th>Puntaje</th>
+                    <th>Categoría</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %}
+                <tr>
+                    <td>{{ producto.nombre }}</td>
+                    <td>{{ producto.stock }}</td>
+                    <td>{{ producto.puntaje }}</td>
+                    <td>{{ producto.categoria.nombre }}</td>
+                    <td>
+                        <a href="{% url 'modificar_producto' producto.id %}" class="btn btn-warning">Modificar</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">No hay productos disponibles.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>  
+</div>
+{% endblock %}
